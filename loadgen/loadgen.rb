@@ -20,6 +20,7 @@ Mongo::Logger.logger.level = ::Logger::WARN
 @docs = Array.new
 
 
+
 def makeFlatDocs(numDocs)
 	@docs.clear
 	for i in 1..numDocs
@@ -33,14 +34,14 @@ def makeFlatDocs(numDocs)
 			"yeast" => Faker::Beer.yeast,
 			"malts" => Faker::Beer.malts,
 			"ibu" => Faker::Beer.ibu,
-			"alcohol" => Faker::Beer.alcohol,
+			"alcohol" => rand().round(3)*10,
 			"blg" => Faker::Beer.blg,
 			"firstBrewDate" => Faker::Time.between(3650.days.ago, Date.today, :day),
 			# todo make price more realistic
 			"price" => Faker::Commerce.price,
 		}
 		@docs << doc 		
-		#ap doc
+		ap doc
 	end
 end
 
@@ -56,7 +57,7 @@ def makeKVDocs(numDocs)
 		yeast_h = {"k" => "yeast", "v" => Faker::Beer.yeast }
 		malts_h = {"k" => "malts", "v" => Faker::Beer.malts }
 		ibu_h = {"k" => "ibu", "v" => Faker::Beer.ibu}
-		alcohol_h = {"k" => "alcohol", "v" =>Faker::Beer.alcohol}
+		alcohol_h = {"k" => "alcohol", "v" => rand().round(3)*10 }
 		blg_h = {"k" => "blg", "v" =>Faker::Beer.blg}
 		firstBrewDate_h = {"k" => "firstBrewDate", "v" => Faker::Time.between(3650.days.ago, Date.today, :day)}
 		price_h = {"k" => "price", "v" => Faker::Commerce.price}
@@ -68,7 +69,7 @@ def makeKVDocs(numDocs)
 		}
 
 		@docs << doc 		
-		#ap doc.to_json
+		ap doc.to_json
 	end
 end
 
@@ -96,6 +97,6 @@ def insertDocs(schema,coll,numInserts,numDocs)
 
 end
 
-insertDocs("flat","beer",10,1000)
-insertDocs("kv","beer",10,1000)
+insertDocs("flat","beer",1,10)
+insertDocs("kv","beer",1,1)
 
